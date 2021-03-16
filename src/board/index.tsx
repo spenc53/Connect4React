@@ -87,8 +87,8 @@ class Board extends React.Component {
 
     async aiMove() {
         if(this.board.isGameOver()) {
-            console.log('here')
-            setTimeout(() => {this.board.reset(); this.forceUpdate(); this.playAiGame()},1000)
+            // setTimeout(() => {this.board.reset(); this.forceUpdate(); this.playAiGame()},1000)
+            return;
         };
         this.setState({isAiMove: true});
         let move = await this.workerInstance.processData({
@@ -136,6 +136,22 @@ class Board extends React.Component {
         setTimeout(this.makeRandomMove, this.moveSpeed);
     }
 
+    GetGameOverText(winner: number): string {
+        if (winner === 0) {
+            return "It's a tie!"
+        }
+
+        if (winner === 1) {
+            return "Player 1 (red) won!"
+        }
+
+        if (winner === -1) {
+            return "Player 2 (yellow) won!"
+        }
+
+        return "It's a tie!"
+    }
+
     render() {
         let winningMoves = this.board.getWinner()[1];
         return (
@@ -143,7 +159,7 @@ class Board extends React.Component {
                 <Typography><h1>Connect 4</h1></Typography>
                 <Dialog open={this.board.isGameOver()}>
                     <div style={{margin:'5px', textAlign:'center'}}>
-                        The Winner is: {this.board.getWinner()[0]}
+                        {this.GetGameOverText(this.board.getWinner()[0])}
                         <div>
                             <Button variant="contained" onClick={() => {this.board.reset(); this.forceUpdate()}}>Reset</Button>
                         </div>
