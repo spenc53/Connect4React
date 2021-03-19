@@ -1,10 +1,28 @@
-# Getting Started with Create React App
+# Connect 4 AI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## How it works
+
+It's normal connect 4 but, the second player is an AI. The AI is based off of a Monte Carlo Search tree. This estimates the best move by simulating a bunch of games. You can learn more at these sites: https://en.wikipedia.org/wiki/Monte_Carlo_tree_search and https://towardsdatascience.com/monte-carlo-tree-search-158a917a8baa.
+
+A simple explanation is that the AI intelligently deepens a tree of the game. It does this by expanding a game tree at each move. It will pick a move at the current tree level. It does this by choosing the highest value move or randomly selecting a move that it has not played before. It will keep doing this until it reaches a tree that it has not been to before. Once it gets to that spot in a game tree, it will randomly pick moves for both players to the end of the game. It will then propagate the value of the end state up the path that was taken to get to the end game state. At each move that was made, that move's value will be increased or decreased by the end game's value.
+
+### My Code
+
+#### src/ai/GameNode.ts
+This represents a move that can be made and it's current value. It also has a reference of moves that can be played next.
+
+#### src/ai/MCTS.ts
+This is the code that generates the tree and finds the next best move.
+
+#### src/data/Board.ts
+This contains all the logic about how the game is played. It also includes some helper functions (to/from json) to allow it be easier to transfer to a service worker.
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm install`
+This installs the needed dependencies in order to run this project.
 
 ### `npm start`
 
@@ -13,11 +31,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
@@ -28,19 +41,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
